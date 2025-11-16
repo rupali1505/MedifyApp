@@ -1,0 +1,27 @@
+
+.navlinks {
+  display: flex;
+  /* gap: 24px; */
+  align-items: center;
+  }
+
+
+@media (max-width: 900px) {
+  .navlinks {
+    display: none; 
+  }
+
+  .active {
+    display: flex;         /* show menu links when active */
+    position: absolute;
+    color:black;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: #034382;
+    padding: 20px 0;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 1000;
+  }
+}
