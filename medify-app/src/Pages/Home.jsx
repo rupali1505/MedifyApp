@@ -1,5 +1,7 @@
 import { Container, Stack, Box } from "@mui/material";
-import Navbar from "../Components/Navbar";
+import Navbar from "../Components/NavBar/Navbar";
+import HeroSlider from "../Components/Hero/HeroSlider";
+import SearchHospitals from "../Components/SearchHospital/SearchHospital";
 // import styles from "./Home.module.css";
 
 export default function Home() {
@@ -14,6 +16,12 @@ export default function Home() {
         }}
       >
         <Navbar />
+        <Container>
+          <HeroSlider/>
+          <Stack>
+            <SearchHospitals/>
+          </Stack>
+        </Container>
       </Box>
     </Box>
   );

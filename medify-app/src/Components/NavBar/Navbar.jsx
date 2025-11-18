@@ -9,8 +9,8 @@ import { useState } from "react";
 import { Box, Stack, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
-import logo from "../assets/logo.png";
-import style from "./Navbar.module.css"
+import logo from "../../assets/logo.png";
+import style from "../NavBar/Navbar.module.css"
 
 export default function Navbar() {
   const isMobile = useMediaQuery("(max-width:900px)");
@@ -34,7 +34,7 @@ export default function Navbar() {
           // py={2}
         >
           <Link>
-            <img src={logo} alt="logo" />
+            <img src={logo} alt="logo" height={27}/>
           </Link>
 
           <Stack
@@ -50,7 +50,8 @@ export default function Navbar() {
             pt={{ xs: 12, md: 1 }}
             pb={{ xs: 4, md: 1 }}
             px={{ xs: 4, md: 0 }}
-            color="black"
+           
+            
           >
             <Link>Find Doctors</Link>
             <Link>Hospitals</Link>
