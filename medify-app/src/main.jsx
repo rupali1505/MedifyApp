@@ -1,15 +1,25 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import Home from "./Pages/Home.jsx"
+import Home from "./Pages/Home/Home.jsx";
 import App from "./App.jsx";
+import MyBooking from "./Pages/MyBooking/MyBooking.jsx";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Search from "./Pages/Search/Search.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        path: "search",
+        element: <Search />,
+      },
+      {
+        path: "my-Bookings",
+        element: <MyBooking />,
+      },
       {
         path: "/",
         element: <Home />,
@@ -50,9 +60,7 @@ const theme = createTheme({
 
     MuiContainer: {
       styleOverrides: {
-        root: {
-          
-        },
+        root: {},
       },
     },
 
@@ -117,7 +125,6 @@ const theme = createTheme({
   },
 });
 
-
 theme.typography.h2 = {
   [theme.breakpoints.down("sm")]: {
     fontSize: "32px",
@@ -127,8 +134,7 @@ theme.typography.h2 = {
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router}/>
-     
+      <RouterProvider router={router} />
     </ThemeProvider>
   </StrictMode>
 );

@@ -52,7 +52,9 @@ export default function SearchHospitals() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.state && formData.city) {
-      navigate(`/search?state=${formData.state}&city=${formData.city}`);
+      navigate(
+        `https://meddata-backend.onrender.com/search?state=${formData.state}&city=${formData.city}`
+      );
     }
   };
 
