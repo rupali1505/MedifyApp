@@ -1,8 +1,9 @@
-import { Box, Button, Stack, Typography,Divider } from "@mui/material";
 import { useState } from "react";
-import hospitalIcon from "../../assets/hospitalIcon.png"
-import icon from "../../assets/icon.png"
+import hospitalIcon from "../../assets/hospitalIcon.png";
+import icon from "../../assets/icon.png";
 import Calendar from "../Calendar/Calendar";
+import { Box, Button, Chip, Divider, Stack, Typography } from "@mui/material";
+import { format, parseISO, isValid } from "date-fns";
 
 export default function HospitalCard({
   details,
@@ -12,13 +13,29 @@ export default function HospitalCard({
 }) {
   const [showCalendar, setShowCalendar] = useState(false);
 
+  // Safely parse booking date
+  let bookingDateLabel = "N/A";
+  if (details.bookingDate) {
+    const dateObj =
+      typeof details.bookingDate === "string"
+        ? parseISO(details.bookingDate)
+        : new Date(details.bookingDate);
+    if (isValid(dateObj)) {
+      bookingDateLabel = format(dateObj, "dd MMMM yyyy");
+    }
+  }
+
+  // Safely handle booking time
+  const bookingTimeLabel = details.bookingTime || "N/A";
+
   return (
     <Box sx={{ borderRadius: 2, bgcolor: "#fff", p: { xs: 2, md: 4 } }}>
       <Stack
         direction={{ xs: "column", md: "row" }}
         spacing={{ xs: 1, md: 4 }}
-        flexWrap={"wrap"}
+        flexWrap="wrap"
       >
+        {/* Hospital Icon */}
         <Box
           component="img"
           src={hospitalIcon}
@@ -26,6 +43,8 @@ export default function HospitalCard({
           height="auto"
           sx={{ flexShrink: 0, alignSelf: "start" }}
         />
+
+        {/* Hospital Details */}
         <Box flex={1}>
           <Typography
             component="h3"
@@ -36,38 +55,44 @@ export default function HospitalCard({
             textTransform="capitalize"
             lineHeight={1}
           >
-            {details["Hospital Name"].toLowerCase()}
+            {details["Hospital Name"]?.toLowerCase() || "Unknown Hospital"}
           </Typography>
-
           <Typography
             textTransform="capitalize"
             color="#414146"
             fontSize={14}
-            fontWeight={700}
+            mb={1}
           >
-            {`${details["City"].toLowerCase()}, ${details["state"]}`}
+            {`${details["City"]?.toLowerCase() || "City"}, ${
+              details["State"] || "State"
+            }`}
           </Typography>
-          <Typography>{details["Hospital Type"]}</Typography>
+          <Typography fontSize={14} mb={1}>
+            {details["Hospital Type"] || "Type not available"}
+          </Typography>
+
           <Stack direction="row" flexWrap="wrap" spacing="4px" mb={2}>
             <Typography
+              fontWeight={800}
               textTransform="uppercase"
               color="primary.green"
-              fontWeight={800}
             >
               Free
             </Typography>
             <Typography
               sx={{ textDecoration: "line-through", color: "#787887" }}
             >
-              500
+              ₹500
             </Typography>
-            <Typography>Consultation free at Clinic</Typography>
+            <Typography>Consultation fee at clinic</Typography>
           </Stack>
+
           <Divider sx={{ borderStyle: "dashed", mb: 2 }} />
+
           <Stack
             direction="row"
             alignItems="center"
-            bgcolor="primary.main"
+            bgcolor="primary.green"
             py="4px"
             px={1}
             borderRadius={1}
@@ -86,12 +111,14 @@ export default function HospitalCard({
               color="#fff"
               sx={{ opacity: 0.5 }}
             >
-              {details["Hospital overall rating"] == "Not Available"
+              {details["Hospital overall rating"] === "Not Available"
                 ? 0
                 : details["Hospital overall rating"]}
             </Typography>
           </Stack>
         </Box>
+
+        {/* Booking / Chips */}
         <Stack
           justifyContent={booking ? "flex-start" : "flex-end"}
           minWidth="23%"
@@ -100,8 +127,8 @@ export default function HospitalCard({
             <>
               <Typography
                 textAlign="center"
-                fontSize={14}
                 color="primary.green"
+                fontSize={14}
                 fontWeight={500}
                 mb={1}
               >
@@ -113,21 +140,22 @@ export default function HospitalCard({
                 onClick={() => setShowCalendar((prev) => !prev)}
               >
                 {!showCalendar
-                  ? "Book FREE center visit"
+                  ? "Book FREE Center Visit"
                   : "Hide Booking Calendar"}
               </Button>
             </>
           )}
+
           {booking && (
             <Stack direction="row" spacing={1} mt={{ xs: 2, md: 0 }}>
               <Chip
-                label={details.bookingTime}
+                label={bookingTimeLabel}
                 variant="outlined"
                 color="primary"
                 sx={{ borderRadius: 1, fontSize: 14 }}
               />
               <Chip
-                label={FormData(new Date(details.bookingDate), "dd MMMM yyyy")}
+                label={bookingDateLabel}
                 variant="outlined"
                 color="success"
                 sx={{ borderRadius: 1, fontSize: 14 }}
@@ -136,11 +164,13 @@ export default function HospitalCard({
           )}
         </Stack>
       </Stack>
+
+      {/* Calendar */}
       {showCalendar && (
         <Calendar
-        details={details}
-        availableSlots={availableSlots}
-        handleBooking={handleBooking}
+          details={details}
+          availableSlots={availableSlots}
+          handleBooking={handleBooking}
         />
       )}
     </Box>

@@ -1,10 +1,10 @@
-import { Divider, Stack, Typography,Box } from "@mui/material";
-import { SlideNextButton, SlidePrevButton } from "./SliderButton.jsx"
+import { useRef, useEffect } from "react";
+import { SlideNextButton, SlidePrevButton } from "./SliderButton.jsx";
 import { format, add, isEqual, startOfDay } from "date-fns";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "../../main.css";
+import { Box, Divider, Typography } from "@mui/material";
 import "swiper/css";
-import styles from "./DaySelector.module.css"
-
 
 export default function DaySelector({
   selectedDate,
@@ -12,47 +12,54 @@ export default function DaySelector({
   totalSlots,
 }) {
   const date = startOfDay(new Date());
-  const dateItems = [];
+  const dateItems = Array.from({ length: 7 }, (_, i) => add(date, { days: i }));
 
-  for (let i = 0; i < 7; i++) {
-    dateItems.push(add(date, { days: i }));
-  }
+  const swiperRef = useRef(null);
+
+  const selectedIndex = dateItems.findIndex((day) =>
+    isEqual(day, selectedDate)
+  );
+
+  // Scroll to selected day when component mounts or selectedDate changes
+  useEffect(() => {
+    if (swiperRef.current && selectedIndex >= 0) {
+      swiperRef.current.slideTo(selectedIndex);
+    }
+  }, [selectedDate, selectedIndex]);
 
   const customDateFormat = (day) => {
-    if (isEqual(date, day)) {
-      return "Today";
-    } else if (isEqual(date, add(day, { days: -1 }))) {
-      return "Tomorrow";
-    } else {
-      return format(day, "E, d LLL");
-    }
-  };
-
-  const handleClick = (day) => {
-    setSelectedDate(day);
+    if (isEqual(date, day)) return "Today";
+    if (isEqual(add(date, { days: 1 }), day)) return "Tomorrow";
+    return format(day, "E, d LLL");
   };
 
   return (
-    <Stack pt={3} position="relative">
+    <Box pt={3} position="relative">
       <Divider sx={{ mb: 3 }} />
+
       <Swiper
-        slidesPerView={4}
+        slidesPerView={3}
+        slidesPerGroup={3}
+        spaceBetween={12}
         loop={false}
-        spaceBetween={11}
-        className={styles.swiperStyles}
-        breakpoints={{
-          767: {
-            spaceBetween: 30,
-            slidesPerView: 3,
-          },
-        }}
+        navigation
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        style={{ width: "100%", padding: "0 40px" }}
       >
         {dateItems.map((day, index) => (
-          <SwiperSlide key={index} className={styles.swiperslide}>
-            <Stack
-              textAlign="center"
-              onClick={() => handleClick(day)}
-              sx={{ cursor: "pointer" }}
+          <SwiperSlide
+            key={index}
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            <Box
+              onClick={() => setSelectedDate(day)}
+              sx={{
+                cursor: "pointer",
+                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
               <Typography
                 fontWeight={isEqual(day, selectedDate) ? 700 : 400}
@@ -60,27 +67,26 @@ export default function DaySelector({
               >
                 {customDateFormat(day)}
               </Typography>
-              <Typography fontSize={{ xs: 8, md: 12 }} color="primary.green">
+
+              <Typography fontSize={{ xs: 8, md: 12 }} color="inherit">
                 {`${totalSlots} Slots Available`}
               </Typography>
 
+              {/* Pointer / underline */}
               <Box
                 height={{ xs: "4px", md: "5px" }}
-                width={{ xs: 1, md: "calc(100% - 50px)" }}
-                position="relative"
-                bottom="0"
+                width="60%"
                 bgcolor={
-                  isEqual(day, selectedDate) ? "primary.main" : "rgba(0,0,0,0)"
-                }
-                left={0}
-                zIndex={999}
+                  isEqual(day, selectedDate) ? "primary.main" : "transparent"
+                } // Blue underline
                 mt="5px"
-                mx="auto"
-              ></Box>
-            </Stack>
+                borderRadius="2px"
+              />
+            </Box>
           </SwiperSlide>
         ))}
 
+        {/* Navigation arrows */}
         <span slot="container-start">
           <Box display={{ xs: "none", md: "block" }}>
             <SlidePrevButton />
@@ -94,18 +100,16 @@ export default function DaySelector({
         </span>
       </Swiper>
 
+      {/* Background bar */}
       <Box
         height={{ xs: "4px", md: "5px" }}
-        width={{ xs: 1, md: "calc(100% - 150px)" }}
+        width="100%"
         bgcolor="#F0F0F5"
         mt="5px"
         position="absolute"
         bottom={0}
-        left="50%"
-        sx={{ translate: "-50% 0" }}
-      ></Box>
-    </Stack>
+        left={0}
+      />
+    </Box>
   );
 }
-
-

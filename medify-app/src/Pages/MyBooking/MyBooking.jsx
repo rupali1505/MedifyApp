@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import cta from "../../assets/cta.png";
 import NavBar from "../../Components/NavBar/Navbar";
+import HospitalCard from "../../Components/Card/HospitalCard";
 
 
 
@@ -19,8 +20,7 @@ export default function MyBookings() {
     setFilteredBookings(bookings);
   }, [bookings]);
 
-  //Separate page/component to render all the booked hospitals of user alogwith chosen date and time slot
-  //It utilises HospitalCard component to generate the cards with data
+  
   return (
     <>
       <NavBar />

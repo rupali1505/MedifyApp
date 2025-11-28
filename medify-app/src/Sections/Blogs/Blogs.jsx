@@ -4,7 +4,7 @@ import BlogCard from "./BlogCard"
 export default function Blogs() {
   return (
     <Box py={6}>
-      <Container>
+      <Container maxWidth="xl">
         <Typography color="primary.main" fontWeight={600} textAlign="center">
           Blog & News
         </Typography>
@@ -12,7 +12,7 @@ export default function Blogs() {
           Read Our Latest News
         </Typography>
 
-        <Grid container spacing={4}>
+        <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12} md={4}>
             <BlogCard />
           </Grid>

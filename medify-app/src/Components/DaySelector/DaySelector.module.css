@@ -1,18 +1,37 @@
-.swiperslide {
-    width: calc(100% / 3 - 20px) !important;
-    overflow: hidden;
-}
-
+/* Outer container */
 .swiperStyles {
-    padding: 0 50px;
     width: 100%;
+    padding: 0 50px;
+    overflow: hidden; /* stops vertical overflow */
 }
 
-@media(max-width:900px) {
+/* Wrapper must be a single horizontal row */
+.swiperStyles .swiper-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+}
+
+/* Each date box (slide) */
+.swiperStyles .swiper-slide {
+    flex-shrink: 0 !important;     /* do NOT shrink */
+    width: 140px !important;       /* fixed width like Practo */
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Remove padding on mobile */
+@media (max-width: 900px) {
     .swiperStyles {
         padding: 0;
     }
-    .swiperslide {
-        width: auto!important;
+
+    .swiperStyles .swiper-slide {
+        width: 120px !important;   /* slightly smaller on mobile */
     }
 }

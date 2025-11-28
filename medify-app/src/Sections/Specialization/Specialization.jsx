@@ -7,6 +7,7 @@ import icon4 from "../../assets/Heart Rate Monitor.png";
 import icon5 from "../../assets/Blood Sample.png";
 import icon6 from "../../assets/Immune.png";
 import icon7 from "../../assets/X-Ray.png";
+
 export default function Specialization() {
   const data = [
     { icon: icon1, title: "Dentistry" },
@@ -21,28 +22,31 @@ export default function Specialization() {
 
   return (
     <Box py={6} sx={{ background: "linear-gradient(#E7F0FF, #E8F1FF)" }}>
-      <Container sx={{ textAlign: "center" }}>
+      <Container maxWidth="lg" sx={{ textAlign: "center" }}>
         <Typography variant="h2" mb={4}>
-          Find by specialisation
+          Find by Specialisation
         </Typography>
 
-        <Grid
-          container
-          spacing={{ xs: 1, md: 3 }}
+        <Box
+          display="grid"
+          gridTemplateColumns={{
+            xs: "repeat(2, 1fr)", 
+            sm: "repeat(3, 1fr)", 
+            md: "repeat(4, 1fr)", 
+          }}
+          gap={3} 
           mb={5}
-          justifyContent={"center"}
         >
           {data.map((item) => (
-            <Grid item xs={4} md={3} key={item.title}>
-              <IconCard
-                img={item.icon}
-                title={item.title}
-                bgColor={"#FFFFFF"}
-                shadow={true}
-              />
-            </Grid>
+            <IconCard
+              key={item.title}
+              img={item.icon}
+              title={item.title}
+              bgColor="#FFFFFF"
+              shadow={true}
+            />
           ))}
-        </Grid>
+        </Box>
 
         <Button variant="contained" size="large" disableElevation>
           View All
@@ -51,3 +55,4 @@ export default function Specialization() {
     </Box>
   );
 }
+

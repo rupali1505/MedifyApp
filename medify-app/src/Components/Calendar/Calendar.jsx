@@ -1,12 +1,12 @@
 import { useState } from "react";
 import DaySelector from "../DaySelector/DaySelector.jsx";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { startOfDay } from "date-fns";
-
-import TimeSlotPicker from "../TimeSlotPicker/TimeslotPicker.jsx"
+import TimeSlotPicker from "../TimeSlotPicker/TimeslotPicker.jsx";
 
 export default function Calendar({ availableSlots, details, handleBooking }) {
-  const [selectDate, setSelectDate] = useState(startOfDay(new Date()));
+  const [selectedDate, setSelectedDate] = useState(startOfDay(new Date()));
+
   const totalSlots =
     availableSlots.morning.length +
     availableSlots.afternoon.length +
@@ -15,13 +15,13 @@ export default function Calendar({ availableSlots, details, handleBooking }) {
   return (
     <Box>
       <DaySelector
-        selectDate={selectDate}
-        setSelectDate={setSelectDate}
+        selectedDate={selectedDate} // fixed prop name
+        setSelectedDate={setSelectedDate} // fixed prop name
         totalSlots={totalSlots}
       />
       <TimeSlotPicker
         availableSlots={availableSlots}
-        selectDate={selectDate}
+        selectDate={selectedDate} // this is fine for TimeSlotPicker
         details={details}
         handleBooking={handleBooking}
       />
