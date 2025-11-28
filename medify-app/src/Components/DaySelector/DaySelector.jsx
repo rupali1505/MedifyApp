@@ -1,9 +1,16 @@
-import { Divider, Stack, Typography } from "@mui/material";
+import { Divider, Stack, Typography,Box } from "@mui/material";
+import { SlideNextButton, SlidePrevButton } from "./SliderButton.jsx"
 import { format, add, isEqual, startOfDay } from "date-fns";
-import { SwiperSlide } from "swiper/react";
-import { Swiper } from "swiper/types";
-import style from "./DaySelector.module.css"
-export default function DaySelector({ selectDate, setSelectDate, totalSlots }) {
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import styles from "./DaySelector.module.css"
+
+
+export default function DaySelector({
+  selectedDate,
+  setSelectedDate,
+  totalSlots,
+}) {
   const date = startOfDay(new Date());
   const dateItems = [];
 
@@ -13,7 +20,7 @@ export default function DaySelector({ selectDate, setSelectDate, totalSlots }) {
 
   const customDateFormat = (day) => {
     if (isEqual(date, day)) {
-      return "Today;";
+      return "Today";
     } else if (isEqual(date, add(day, { days: -1 }))) {
       return "Tomorrow";
     } else {
@@ -22,7 +29,7 @@ export default function DaySelector({ selectDate, setSelectDate, totalSlots }) {
   };
 
   const handleClick = (day) => {
-    setSelectDate(day);
+    setSelectedDate(day);
   };
 
   return (
@@ -32,7 +39,7 @@ export default function DaySelector({ selectDate, setSelectDate, totalSlots }) {
         slidesPerView={4}
         loop={false}
         spaceBetween={11}
-        className={style.SwiperStyle}
+        className={styles.swiperStyles}
         breakpoints={{
           767: {
             spaceBetween: 30,
@@ -41,32 +48,29 @@ export default function DaySelector({ selectDate, setSelectDate, totalSlots }) {
         }}
       >
         {dateItems.map((day, index) => (
-          <SwiperSlide key={index} className={style.swiperSlides}>
+          <SwiperSlide key={index} className={styles.swiperslide}>
             <Stack
               textAlign="center"
-              onClick={() => {
-                handleClick(day);
-              }}
+              onClick={() => handleClick(day)}
               sx={{ cursor: "pointer" }}
             >
               <Typography
-                fontWeight={isEqual(day, selectDate) ? 700 : 400}
+                fontWeight={isEqual(day, selectedDate) ? 700 : 400}
                 fontSize={{ xs: 11, md: 16 }}
               >
                 {customDateFormat(day)}
               </Typography>
-
               <Typography fontSize={{ xs: 8, md: 12 }} color="primary.green">
-                {`${totalSlots} slots available`}
+                {`${totalSlots} Slots Available`}
               </Typography>
 
               <Box
                 height={{ xs: "4px", md: "5px" }}
-                width={{ xs: 1, md: "calc(100%-50px)" }}
+                width={{ xs: 1, md: "calc(100% - 50px)" }}
                 position="relative"
                 bottom="0"
                 bgcolor={
-                  isEqual(day, selectDate) ? "primary.main" :  "rgba(25, 5, 5, 1)"
+                  isEqual(day, selectedDate) ? "primary.main" : "rgba(0,0,0,0)"
                 }
                 left={0}
                 zIndex={999}
@@ -79,21 +83,29 @@ export default function DaySelector({ selectDate, setSelectDate, totalSlots }) {
 
         <span slot="container-start">
           <Box display={{ xs: "none", md: "block" }}>
+            <SlidePrevButton />
+          </Box>
+        </span>
+
+        <span slot="container-end">
+          <Box display={{ xs: "none", md: "block" }}>
             <SlideNextButton />
           </Box>
         </span>
       </Swiper>
+
       <Box
         height={{ xs: "4px", md: "5px" }}
-        width={{ xs: 1, md: "calc(100%-50px)" }}
-        position="absolute"
-        bottom="0"
+        width={{ xs: 1, md: "calc(100% - 150px)" }}
         bgcolor="#F0F0F5"
-       sx={{translate:'-50% 0'}}
-        left="50%"
         mt="5px"
-        mx="auto"
+        position="absolute"
+        bottom={0}
+        left="50%"
+        sx={{ translate: "-50% 0" }}
       ></Box>
     </Stack>
   );
 }
+
+

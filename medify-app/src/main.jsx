@@ -7,6 +7,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Search from "./Pages/Search/Search.jsx";
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,23 +29,17 @@ const router = createBrowserRouter([
   },
 ]);
 
-const theme = createTheme({
+export const theme = createTheme({
   typography: {
-    fontFamily: "Poppins, sans-serif",
+    fontFamily: "Poppins , sans-serif",
   },
-
   palette: {
     primary: {
       main: "#2AA7FF",
-    },
-    green: {
-      main: "#00A500",
-    },
-    secondary: {
-      main: "#1B3C74",
+      green: "#00A500",
+      secondary: "#1B3C74",
     },
   },
-
   components: {
     MuiButton: {
       styleOverrides: {
@@ -57,55 +52,53 @@ const theme = createTheme({
         },
       },
     },
-
     MuiContainer: {
       styleOverrides: {
-        root: {},
+        root: {
+          width: "90%",
+        },
       },
     },
-
     MuiTypography: {
       styleOverrides: {
         h1: {
           color: "#000000",
           fontSize: "56px",
-          fontWeight: 700,
+          fontWeight: "700",
         },
         h2: {
           color: "#1B3C74",
+          fontWeight: "600",
           fontSize: "48px",
-          fontWeight: 600,
           lineHeight: 1.2,
         },
         h3: {
           color: "#102851",
           fontSize: "30px",
-          fontWeight: 500,
+          fontWeight: "500",
         },
       },
     },
-
     MuiSelect: {
       styleOverrides: {
         root: {
           background: "#FAFBFE",
           borderRadius: "8px",
           color: "#ABB6C7",
-          "& .MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline":
+          "& .MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, & .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
             {
               borderColor: "#F0F0F0",
             },
         },
       },
     },
-
     MuiTextField: {
       styleOverrides: {
         root: {
           background: "#FAFBFE",
           borderRadius: "8px",
           color: "#ABB6C7",
-          "& .MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline":
+          "& .MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, & .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
             {
               borderColor: "#F0F0F0",
             },
@@ -113,7 +106,6 @@ const theme = createTheme({
       },
     },
   },
-
   breakpoints: {
     values: {
       xs: 0,
@@ -130,6 +122,19 @@ theme.typography.h2 = {
     fontSize: "32px",
   },
 };
+
+theme.typography.h1 = {
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "36px",
+  },
+};
+
+theme.typography.h3 = {
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "22px",
+  },
+};
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

@@ -1,7 +1,9 @@
 import { useState } from "react";
-import DaySelector from "./DaySelector";
+import DaySelector from "../DaySelector/DaySelector.jsx";
 import { Box, Typography } from "@mui/material";
 import { startOfDay } from "date-fns";
+
+import TimeSlotPicker from "../TimeSlotPicker/TimeslotPicker.jsx"
 
 export default function Calendar({ availableSlots, details, handleBooking }) {
   const [selectDate, setSelectDate] = useState(startOfDay(new Date()));

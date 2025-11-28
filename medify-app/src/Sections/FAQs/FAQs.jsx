@@ -1,5 +1,6 @@
 import {Box, Grid, Typography, Container} from "@mui/material";
-import faqImg from "../../assets/faqImg.png"
+import faqImg from "../../assets/faqImg.png";
+import CustomizedAccordions from "./Accordion";
 export default function FAQs(){
     const faqs = [
       {
@@ -31,25 +32,17 @@ export default function FAQs(){
             Get Your Answer
           </Typography>
           <Typography variant="h2" mb={2} textAlign="center">
-           Frequently Asked Question
+            Frequently Asked Question
           </Typography>
           <Grid container alignItems="center" spacing={5}>
             <Grid item xs={12} mb={6}>
-                <Box
-                src={faqImg}
-                component="img"
-                width={1}
-                height='auto'
-                />
-                </Grid>
-                <Grid item xs={12} mb={6}>
-                    <Box maxWidth={450}>
-                        {/* <CustomizedAccordions data = {faqs}/> */}
-
-                    </Box>
-
-                </Grid>
-
+              <Box src={faqImg} component="img" width={1} height="auto" />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Box maxWidth={450}>
+                <CustomizedAccordions data={faqs} />
+              </Box>
+            </Grid>
           </Grid>
         </Container>
       </Box>

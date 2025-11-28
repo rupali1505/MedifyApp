@@ -1,7 +1,8 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography,Divider } from "@mui/material";
 import { useState } from "react";
 import hospitalIcon from "../../assets/hospitalIcon.png"
 import icon from "../../assets/icon.png"
+import Calendar from "../Calendar/Calendar";
 
 export default function HospitalCard({
   details,

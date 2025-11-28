@@ -1,18 +1,30 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import CardActionArea from "@mui/material/CardActionArea";
+import { Box, Stack, Typography } from "@mui/material";
 
-export default function IconCard(props) {
+export default function IconCard({
+  img,
+  title,
+  bgColor,
+  active = false,
+  shadow = false,
+}) {
   return (
-    <Card>
-      <CardActionArea>
-        <CardMedia component="img" image={props.img} alt={props.title} />
-        <CardContent sx={{ padding: 0 }}>
-          <Typography color="#ABB6C7">{props.title}</Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <Stack
+      spacing={2}
+      alignItems="center"
+      bgcolor={active ? "rgba(42,167,255,0.08)" : bgColor}
+      p={3}
+      borderRadius={2}
+      border={active ? "1px solid #2AA7FF" : "0"}
+      boxShadow={shadow ? "0 0 24px rgba(0,0,0,0.09)" : "none"}
+    >
+      <Box component="img" src={img} height={60} width={60} />
+      <Typography
+        color={active ? "primary.main" : "#ABB6C7"}
+        fontSize={18}
+        fontWeight={active ? 600 : 400}
+      >
+        {title}
+      </Typography>
+    </Stack>
   );
 }

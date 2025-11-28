@@ -33,8 +33,8 @@ export default function Navbar() {
           justifyContent="space-between"
           // py={2}
         >
-          <Link>
-            <img src={logo} alt="logo" height={27}/>
+          <Link to="/">
+            <img src={logo} alt="logo" height={27} />
           </Link>
 
           <Stack
@@ -50,17 +50,15 @@ export default function Navbar() {
             pt={{ xs: 12, md: 1 }}
             pb={{ xs: 4, md: 1 }}
             px={{ xs: 4, md: 0 }}
-           
-            
           >
             <Link>Find Doctors</Link>
-            <Link>Hospitals</Link>
+            <Link to="/search">Hospitals</Link>
             <Link>Medicines</Link>
             <Link>Surgeries</Link>
             <Link>Software for Provider</Link>
             <Link>Facilities</Link>
 
-            <Link>
+            <Link to="/my-bookings">
               <Button variant="contained" disableElevation>
                 My Bookings
               </Button>

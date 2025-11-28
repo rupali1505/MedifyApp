@@ -53,13 +53,14 @@ export default function SearchHospitals() {
     e.preventDefault();
     if (formData.state && formData.city) {
       navigate(
-        `https://meddata-backend.onrender.com/search?state=${formData.state}&city=${formData.city}`
+        `/search?state=${formData.state}&city=${formData.city}`
       );
     }
   };
 
   return (
     <Box
+    mt={2}
       component="form"
       onSubmit={handleSubmit}
       sx={{
@@ -84,7 +85,7 @@ export default function SearchHospitals() {
         sx={{ minWidth: 200, width: "100%" }}
       >
         <MenuItem disabled value="" selected>
-          state
+          State
         </MenuItem>
         {states.map((state) => (
           <MenuItem key={state} value={state}>
