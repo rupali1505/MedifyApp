@@ -103,7 +103,7 @@ export default function Search() {
                 mb={2}
                 fontWeight={500}
               >
-                {`${hospitals.length} medical centers available in `}
+                {`${hospitals.length} medical centers available in`}
                 <span style={{ textTransform: "capitalize" }}>
                   {city.toLocaleLowerCase()}
                 </span>

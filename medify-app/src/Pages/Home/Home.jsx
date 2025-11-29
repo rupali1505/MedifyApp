@@ -27,7 +27,7 @@ export default function Home() {
           <HeroSlider />
           <Stack
             p={{ xs: 2.5, md: 8 }}
-            // mt={{ xs: -2, md: 0, lg: -6, xl: -10 }}
+            
             mt={0}
             position="relative"
             zIndex={99}

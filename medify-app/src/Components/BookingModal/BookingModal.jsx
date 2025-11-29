@@ -20,14 +20,20 @@ export default function BookingModal({
   const handleBooking = (e) => {
     e.preventDefault();
     triggerEvent();
-    const bookings = localStorage.getItem("booking") || "[]";
+
+    const bookings = localStorage.getItem("bookings") || "[]";
     const oldBookings = JSON.parse(bookings);
+
+    
+    const updatedBooking = {
+      ...bookingDetails,
+      bookingEmail: email,
+      bookingDate: new Date(bookingDetails.bookingDate).toISOString(),
+    };
+
     localStorage.setItem(
       "bookings",
-      JSON.stringify([
-        ...oldBookings,
-        { ...bookingDetails, bookingEmail: email },
-      ])
+      JSON.stringify([...oldBookings, updatedBooking])
     );
 
     showSuccessMessage(true);
@@ -37,24 +43,18 @@ export default function BookingModal({
 
   const triggerEvent = () => {
     window.dataLayer = window.dataLayer || [];
-
-    function triggerFirstVisitEvent() {
-      window.dataLayer.push({
-        event: "first-visit",
-        eventDate: new Date().toISOString(),
-      });
-    }
-    triggerFirstVisitEvent();
+    window.dataLayer.push({
+      event: "first-visit",
+      eventDate: new Date().toISOString(),
+    });
   };
 
   const formatDate = (day) => {
-    if (day) {
-      const date = new Date(day);
-      return format(date, "E, d LLL");
-    } else {
-      return null;
-    }
+    if (!day) return "";
+    const date = new Date(day);
+    return format(date, "E, d LLL");
   };
+
   return (
     <Modal open={open} onClose={() => setOpen(false)}>
       <Box
@@ -75,6 +75,7 @@ export default function BookingModal({
         <Typography component="h3" variant="h3">
           Confirm Booking
         </Typography>
+
         <Typography fontSize={14} mb={3}>
           <Box component="span">
             Please enter your email to confirm booking for{" "}
@@ -85,6 +86,7 @@ export default function BookingModal({
             )}`}
           </Box>
         </Typography>
+
         <form onSubmit={handleBooking}>
           <Stack alignItems="flex-start" spacing={2}>
             <TextField

@@ -13,19 +13,35 @@ export default function HospitalCard({
 }) {
   const [showCalendar, setShowCalendar] = useState(false);
 
-  // Safely parse booking date
+  
   let bookingDateLabel = "N/A";
+
   if (details.bookingDate) {
-    const dateObj =
-      typeof details.bookingDate === "string"
-        ? parseISO(details.bookingDate)
-        : new Date(details.bookingDate);
+    let dateObj;
+
+    
+    if (
+      typeof details.bookingDate === "string" &&
+      details.bookingDate.includes("T")
+    ) {
+      dateObj = parseISO(details.bookingDate);
+    }
+   
+    else if (typeof details.bookingDate === "string") {
+      dateObj = new Date(details.bookingDate);
+    }
+    
+    else {
+      dateObj = details.bookingDate;
+    }
+
+    
     if (isValid(dateObj)) {
       bookingDateLabel = format(dateObj, "dd MMMM yyyy");
     }
   }
 
-  // Safely handle booking time
+  
   const bookingTimeLabel = details.bookingTime || "N/A";
 
   return (
@@ -57,6 +73,7 @@ export default function HospitalCard({
           >
             {details["Hospital Name"]?.toLowerCase() || "Unknown Hospital"}
           </Typography>
+
           <Typography
             textTransform="capitalize"
             color="#414146"
@@ -67,6 +84,7 @@ export default function HospitalCard({
               details["State"] || "State"
             }`}
           </Typography>
+
           <Typography fontSize={14} mb={1}>
             {details["Hospital Type"] || "Type not available"}
           </Typography>
@@ -134,6 +152,7 @@ export default function HospitalCard({
               >
                 Available Today
               </Typography>
+
               <Button
                 variant="contained"
                 disableElevation
@@ -154,6 +173,7 @@ export default function HospitalCard({
                 color="primary"
                 sx={{ borderRadius: 1, fontSize: 14 }}
               />
+
               <Chip
                 label={bookingDateLabel}
                 variant="outlined"

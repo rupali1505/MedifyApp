@@ -26,7 +26,12 @@ export default function TimeSlotPicker({
   );
 
   const handleClick = (slot) => {
-    handleBooking({ ...details, bookingDate: selectedDate, bookingTime: slot });
+    handleBooking({
+      ...details,
+      bookingDate: selectedDate.toISOString(),
+
+      bookingTime: slot,
+    });
   };
 
   return (
@@ -48,6 +53,7 @@ export default function TimeSlotPicker({
           >
             Morning
           </Typography>
+
           {availableSlots.morning.map((slot) => (
             <CustomChip
               key={slot}
@@ -57,6 +63,7 @@ export default function TimeSlotPicker({
           ))}
         </Stack>
       )}
+
       {availableSlots.afternoon.length > 0 && (
         <Stack
           direction="row"
@@ -70,6 +77,7 @@ export default function TimeSlotPicker({
           >
             Afternoon
           </Typography>
+
           {availableSlots.afternoon.map((slot) => (
             <CustomChip
               key={slot}
@@ -79,7 +87,8 @@ export default function TimeSlotPicker({
           ))}
         </Stack>
       )}
-      {availableSlots.afternoon.length > 0 && (
+
+      {availableSlots.evening.length > 0 && ( // <-- FIXED
         <Stack
           direction="row"
           alignItems="center"
@@ -92,6 +101,7 @@ export default function TimeSlotPicker({
           >
             Evening
           </Typography>
+
           {availableSlots.evening.map((slot) => (
             <CustomChip
               key={slot}

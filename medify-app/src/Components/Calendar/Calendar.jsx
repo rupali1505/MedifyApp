@@ -15,13 +15,13 @@ export default function Calendar({ availableSlots, details, handleBooking }) {
   return (
     <Box>
       <DaySelector
-        selectedDate={selectedDate} // fixed prop name
-        setSelectedDate={setSelectedDate} // fixed prop name
+        selectedDate={selectedDate} 
+        setSelectedDate={setSelectedDate} 
         totalSlots={totalSlots}
       />
       <TimeSlotPicker
         availableSlots={availableSlots}
-        selectDate={selectedDate} // this is fine for TimeSlotPicker
+        selectedDate={selectedDate} 
         details={details}
         handleBooking={handleBooking}
       />
