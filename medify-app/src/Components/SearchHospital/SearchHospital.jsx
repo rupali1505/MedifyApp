@@ -60,7 +60,7 @@ export default function SearchHospitals() {
 
   return (
     <Box
-    mt={2}
+      mt={2}
       component="form"
       onSubmit={handleSubmit}
       sx={{
@@ -120,12 +120,11 @@ export default function SearchHospitals() {
         type="submit"
         variant="contained"
         size="large"
+        id="searchBtn"
         startIcon={<SearchIcon />}
         sx={{ py: "15px", px: 8, flexShrink: 0 }}
         disableElevation
-      >
-        Search
-      </Button>
+      >Search</Button>
     </Box>
   );
 }
